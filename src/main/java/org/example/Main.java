@@ -37,28 +37,29 @@ public class Main {
             Team findTeam = em.find(Team.class,findTeamId);*/
 
 
-            // 객체 지향 모델링 사용시
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
             Member member  = new Member();
             member.setUsername("MemberA");
-            member.setTeam(team);
+            // 연관관계 주인인 member에서 값 세팅
+            member.changeTeam(team);
             em.persist(member);
+
 
 
             em.flush();
             em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
 
-            List<Member> members = findMember.getTeam().getMembers();
-
-            for (Member m : members){
-                System.out.println("member:" + m.getUsername());
+            System.out.println("===============");
+            for (Member m : members) {
+                System.out.println("m =" +m.getUsername());
             }
-
+            System.out.println("===============");
 
             // 커밋시점에서 insert 쿼리가 나간다
             transaction.commit();
