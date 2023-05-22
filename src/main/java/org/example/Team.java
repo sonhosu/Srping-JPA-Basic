@@ -2,15 +2,27 @@ package org.example;
 
 import org.hibernate.annotations.GeneratorType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Team {
     @Id @GeneratedValue
     private Long id;
+    private String name;
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
+    }
+
+    // Member 의 team 변수와 연결되어있다는 뜻
+    @OneToMany(mappedBy = "team")
+    private List<Member> members = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -28,6 +40,6 @@ public class Team {
         this.name = name;
     }
 
-    private String name;
+
 
 }
