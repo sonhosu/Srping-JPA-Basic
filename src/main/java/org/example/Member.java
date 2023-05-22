@@ -1,38 +1,52 @@
 package org.example;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Member {
-
-    @Id //PK설정
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
-    private String name;
 
-    public Member(){
+    @Column(name = "USERNAME")
+    private String username;
 
-    }
+    //DB중심 모델링
+    // @Column(name = "TEAM_ID")
+    // private Long teamId;
 
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    //객체 지향 모델링
+    @ManyToOne   // 단방향 연관관계
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Long getId() {
         return id;
     }
 
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+
+
+
 }
+
