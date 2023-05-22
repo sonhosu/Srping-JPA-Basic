@@ -21,13 +21,39 @@ public class Main {
         transaction.begin();
 
         try {
-            // 비영속 상태
-            Member member1 = new Member(150L , "A");
-            Member member2 = new Member(160L , "B");
+            // 객체를 테이블에 맞추어 모델링
+            // 객체지향적인 방법은 아니다.
+           /* Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            // 아직까지 insert 쿼리가 나가지않는다.
-            em.persist(member1);
-            em.persist(member2);
+           Member member  = new Member();
+           member.setName("MemberA");
+           member.setTeamId(team.getId());
+           em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getId());
+            Long findTeamId = findMember.getTeamId();
+            Team findTeam = em.find(Team.class,findTeamId);*/
+
+
+            // 객체 지향 모델링 사용시
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member  = new Member();
+            member.setUsername("MemberA");
+            member.setTeam(team);
+            em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            Team findTeam = findMember.getTeam();
+
+
+
+
 
             // 커밋시점에서 insert 쿼리가 나간다
             transaction.commit();
