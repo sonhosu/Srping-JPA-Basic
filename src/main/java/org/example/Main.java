@@ -47,12 +47,17 @@ public class Main {
             member.setTeam(team);
             em.persist(member);
 
+
+            em.flush();
+            em.clear();
+
             Member findMember = em.find(Member.class, member.getId());
 
-            Team findTeam = findMember.getTeam();
+            List<Member> members = findMember.getTeam().getMembers();
 
-
-
+            for (Member m : members){
+                System.out.println("member:" + m.getUsername());
+            }
 
 
             // 커밋시점에서 insert 쿼리가 나간다
